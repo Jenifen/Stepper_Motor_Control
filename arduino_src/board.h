@@ -1,5 +1,8 @@
 #ifndef BOARD_H
 #define BOARD_H
+#include "Arduino.h"
+#include "LiquidCrystal_I2C.h"
+
 
 #define STARTUP_DELAY 2000
 
@@ -23,6 +26,10 @@
 #define MIN_PERIOD_STEP 20
 #define MAX_PERIOD_STEP 2000
 
+
+
+namespace Board 
+{
 class Controller
 {
 public:
@@ -56,7 +63,7 @@ public:
     
     void changeDuty(const unsigned int &period);
     
-    void stop() const ;
+    static void Stop();
     
 private:
 
@@ -74,5 +81,7 @@ private:
 
 
 
+
+}
 
 #endif 

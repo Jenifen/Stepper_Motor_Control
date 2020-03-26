@@ -1,19 +1,19 @@
 
 #include "board.h"
-#include "Arduino.h"
+
 
 // Constructor
-Controller::Controller() {
+Board::Controller::Controller() {
   // Empty constructor
 }
 
-void Controller::begin()
+void Board::Controller::begin()
 {
     pinMode(DRIVER_DIR_PIN, OUTPUT);
     pinMode(DRIVER_PUL_PIN, OUTPUT);
     pinMode(READY_PIN, INPUT_PULLUP);
     pinMode(STOP_PIN, INPUT_PULLUP);
-    attachInterrupt(digitalPinToInterrupt(STOP_PIN), Controller::Stop, FALLING);
+    attachInterrupt(digitalPinToInterrupt(STOP_PIN), Board::Controller::Stop, FALLING);
     
     delay(STARTUP_DELAY);
     #ifdef DEBUG_PRINTS
@@ -21,7 +21,8 @@ void Controller::begin()
     #endif
 
 }
-void Controller::stop() const
+
+static void Board::Controller::Stop() 
 {
     digitalWrite(DRIVER_PUL_PIN, LOW);
     digitalWrite(DRIVER_DIR_PIN, LOW);
@@ -29,7 +30,7 @@ void Controller::stop() const
 }
 
 
-void Controller::setDirection(const Direction &dir)
+void Board::Controller::setDirection(const Direction &dir)
 {
     digitalWrite(DRIVER_DIR_PIN, dir);
     #ifdef DEBUG_PRINTS
@@ -38,7 +39,7 @@ void Controller::setDirection(const Direction &dir)
 }
 
 
-bool Controller::getTimer()
+bool Board::Controller::getTimer()
 {
     unsigned long currentMillis = millis();
     
@@ -61,30 +62,30 @@ bool Controller::getTimer()
     }
 }
 
-void Controller::changeDuty(const unsigned int &period ) 
+void Board::Controller::changeDuty(const unsigned int &period ) 
 {
     pulseDelayPeriod_ = period; 
     finishProcess_ = getTimer();
 
     switch (state_)
     {
-    case Controller::PULState::eReady :
+    case Board::Controller::PULState::eReady :
     {    
         digitalWrite(DRIVER_PUL_PIN, HIGH);
-        state_ = Controller::PULState::eHIGH;
+        state_ = Board::Controller::PULState::eHIGH;
         break;
     } 
-    case Controller::PULState::eHIGH :
+    case Board::Controller::PULState::eHIGH :
     {
         if (finishProcess_)
         {
             digitalWrite(DRIVER_PUL_PIN, LOW);
-            state_ = Controller::PULState::eLOW; 
+            state_ = Board::Controller::PULState::eLOW; 
         }
         break;
 
     }
-    case Controller::PULState::eLOW :
+    case Board::Controller::PULState::eLOW :
     {
         if (finishProcess_)
         {

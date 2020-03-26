@@ -1,6 +1,6 @@
 #include "board.h"
 
-Controller* control;
+Board::Controller* control;
 
 
 void setup()
@@ -8,7 +8,8 @@ void setup()
     if (control == nullptr) while(1)
     Serial.begin(DEBUG_BAUDRATE);
     control->begin();
-    control->stop();
+    control->Stop();
+    
 
     control->setDirection(control->eClockWise);
 }
