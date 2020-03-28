@@ -124,7 +124,9 @@ void Board::Controller::TEST() const
         delay(2000);
         digitalWrite(DRIVER_PUL_PIN, LOW);
         delay(2000);
-        
+        #ifdef DEBUG_PRINTS
+            Serial.println("\n*** TickTEST ***\n");
+        #endif
         
     }
 }
