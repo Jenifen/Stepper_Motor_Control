@@ -12,10 +12,14 @@ void setup()
     
 
     control->setDirection(control->eClockWise);
+    #ifdef TEST_STEP
+        control->TEST();
+    #endif 
 }
 void loop()
 {
 
+    
     unsigned long period = map(analogRead(POT_SPEED_PIN), MIN_ANALOG_READ, 
         MAX_ANALOG_READ, MAX_PERIOD_STEP, MIN_PERIOD_STEP);
     

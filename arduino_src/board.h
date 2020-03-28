@@ -26,10 +26,13 @@
 #define MIN_PERIOD_STEP 20
 #define MAX_PERIOD_STEP 2000
 
+// for testing 
+#define TEST_STEP
 
 
 namespace Board 
 {
+
 class Controller
 {
 public:
@@ -65,6 +68,7 @@ public:
     
     static void Stop();
     
+    void TEST() const ;
 private:
 
     bool getTimer();

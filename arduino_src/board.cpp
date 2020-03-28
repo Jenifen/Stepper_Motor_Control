@@ -109,3 +109,22 @@ void Board::Controller::changeDuty(const unsigned int &period )
     #endif
     
 }
+
+void Board::Controller::TEST() const 
+{
+    while (1)
+    {
+        Board::Controller::setDirection(Board::Controller::Direction::eClockWise);
+        digitalWrite(DRIVER_PUL_PIN, HIGH);
+        delay(2000);
+        digitalWrite(DRIVER_PUL_PIN, LOW);
+        delay(2000);
+        Board::Controller::setDirection(Board::Controller::Direction::eAntiClockWise);
+        digitalWrite(DRIVER_PUL_PIN, HIGH);
+        delay(2000);
+        digitalWrite(DRIVER_PUL_PIN, LOW);
+        delay(2000);
+        
+        
+    }
+}
