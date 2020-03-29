@@ -27,7 +27,13 @@
 #define MAX_PERIOD_STEP 2000
 
 // for testing 
-#define TEST_STEP
+//#define TEST_STEP
+//#define TEST_DIRECTION_CLOCKWISE 
+#define TEST_DIRECTION_ANTICLOCKWISE
+
+//direction start
+#define START_DIRECTION_CLOCKWISE
+//#define START_DIRECTION_ANTICLOCKWISE
 
 
 namespace Board 
@@ -80,7 +86,7 @@ private:
     
     bool finishProcess_ = false;
 
-    PULState state_ = PULState::eReady ;
+    Board::Controller::PULState state_ = Board::Controller::PULState::eReady ;
 };
 
 

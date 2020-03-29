@@ -41,7 +41,7 @@ void Board::Controller::setDirection(const Direction &dir)
 
 bool Board::Controller::getTimer()
 {
-    unsigned long currentMillis = millis();
+    unsigned long currentMillis = micros();
     
     if (abs(currentMillis - previousMillis_) >= pulseDelayPeriod_) 
     {   
@@ -55,7 +55,8 @@ bool Board::Controller::getTimer()
     else 
     {
       #ifdef DEBUG_PRINTS
-        Serial.println("[INFO] timer is ", (currentMillis-previousMillis_));
+      float h=currentMillis-previousMillis_;
+   //      Serial.println("[INFO] timer is ", (String)h );
       #endif
   
       return false;
@@ -63,39 +64,45 @@ bool Board::Controller::getTimer()
 }
 
 void Board::Controller::changeDuty(const unsigned int &period ) 
-{
+{   
+    //Serial.print("change duty called : ");
+    //Serial.println(state_);
     pulseDelayPeriod_ = period; 
     finishProcess_ = getTimer();
-
     switch (state_)
     {
     case Board::Controller::PULState::eReady :
-    {    
+    {   
+        Serial.println("ready");
         digitalWrite(DRIVER_PUL_PIN, HIGH);
         state_ = Board::Controller::PULState::eHIGH;
         break;
     } 
     case Board::Controller::PULState::eHIGH :
-    {
+    {     
+        Serial.println("eHIGH");
         if (finishProcess_)
-        {
+        {   
             digitalWrite(DRIVER_PUL_PIN, LOW);
-            state_ = Board::Controller::PULState::eLOW; 
+            state_ = Board::Controller::PULState::eLOW;
+             
         }
         break;
 
     }
     case Board::Controller::PULState::eLOW :
-    {
+    {   
+        Serial.println("eLOW"); 
         if (finishProcess_)
         {
             digitalWrite(DRIVER_PUL_PIN, HIGH);
-            state_ = Controller::PULState::eHIGH; 
+            state_ = Board::Controller::PULState::eHIGH;
+            
         }
         break;
     }
     default:
-    {
+    {   Serial.println("default");
         #ifdef DEBUG_PRINTS
             Serial.println("[WARN] default Sate called");
         #endif
@@ -105,7 +112,7 @@ void Board::Controller::changeDuty(const unsigned int &period )
     }
 
     #ifdef DEBUG_PRINTS
-        Serial.println("StatePul is ", state_);
+        //Serial.println("StatePul is ", state_);
     #endif
     
 }
@@ -113,17 +120,27 @@ void Board::Controller::changeDuty(const unsigned int &period )
 void Board::Controller::TEST() const 
 {
     while (1)
-    {
+    { 
+      #ifdef TEST_DIRECTION_CLOCKWISE
+        #ifndef TEST_DIRECTION_ANTICLOCKWISE
         Board::Controller::setDirection(Board::Controller::Direction::eClockWise);
         digitalWrite(DRIVER_PUL_PIN, HIGH);
-        delay(2000);
+        delayMicroseconds(50);
         digitalWrite(DRIVER_PUL_PIN, LOW);
-        delay(2000);
+        delayMicroseconds(50);
+        #endif
+      #endif
+      #ifdef TEST_DIRECTION_ANTICLOCKWISE
+        #ifndef TEST_DIRECTION_CLOCKWISE
+   
         Board::Controller::setDirection(Board::Controller::Direction::eAntiClockWise);
         digitalWrite(DRIVER_PUL_PIN, HIGH);
-        delay(2000);
+        delayMicroseconds(50);
         digitalWrite(DRIVER_PUL_PIN, LOW);
-        delay(2000);
+        delayMicroseconds(50);
+        #endif  
+      #endif
+      
         #ifdef DEBUG_PRINTS
             Serial.println("\n*** TickTEST ***\n");
         #endif
