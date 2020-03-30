@@ -49,20 +49,21 @@ public:
         eClockWise = 1
     };
 
-    enum PULState
+    enum PulseState
     {   
         eReady = 0,
         eLOW = 1,
-        eHIGH = 2
+        eHIGH = 2,
+        eError = 3
     };
 
     Controller(void);
-    void begin();
+    void begin() const ;
     /*
      *
      * 
      */ 
-    void setDirection(const Direction &dir) ;
+    void setDirection(const Direction &dir)  ;
     
     /* 
      * @brief change duty 
@@ -70,11 +71,17 @@ public:
      * 
      */ 
     
-    void changeDuty(const unsigned int &period);
-    
+    void changeDutyCycle(const unsigned int &period);
+    /*
+     * @brief this is for changing period cycle 
+     * @param period : period in [m/s]
+     */
+    void changePeriodCycle(const unsigned int& period) ; 
+
     static void Stop();
     
     void TEST() const ;
+
 private:
 
     bool getTimer();
@@ -82,12 +89,13 @@ private:
     
     unsigned int pulseDelayPeriod_ = 500; //value pot 
 
+    unsigned long previousMicros_ = 0;     // will store last time 
     unsigned long previousMillis_ = 0;     // will store last time 
     
     bool finishProcess_ = false;
 
-    Board::Controller::PULState state_ = Board::Controller::PULState::eReady ;
- 
+    Board::Controller::PulseState state_ = Board::Controller::PulseState::eReady ;
+    Board::Controller::Direction progress_direction_; 
 };
 
 
