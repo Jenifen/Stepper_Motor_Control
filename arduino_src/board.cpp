@@ -33,6 +33,7 @@ static void Board::Controller::Stop()
 void Board::Controller::setDirection(const Direction &dir)
 {
     digitalWrite(DRIVER_DIR_PIN, dir);
+    delayMicroseconds(2);
     #ifdef DEBUG_PRINTS
         Serial.println("\n Direction Changed \n");
     #endif
@@ -65,22 +66,18 @@ bool Board::Controller::getTimer()
 
 void Board::Controller::changeDuty(const unsigned int &period ) 
 {   
-    //Serial.print("change duty called : ");
-    //Serial.println(state_);
     pulseDelayPeriod_ = period; 
     finishProcess_ = getTimer();
     switch (state_)
     {
     case Board::Controller::PULState::eReady :
     {   
-        Serial.println("ready");
         digitalWrite(DRIVER_PUL_PIN, HIGH);
         state_ = Board::Controller::PULState::eHIGH;
         break;
     } 
     case Board::Controller::PULState::eHIGH :
-    {     
-        Serial.println("eHIGH");
+    {    
         if (finishProcess_)
         {   
             digitalWrite(DRIVER_PUL_PIN, LOW);
@@ -91,8 +88,7 @@ void Board::Controller::changeDuty(const unsigned int &period )
 
     }
     case Board::Controller::PULState::eLOW :
-    {   
-        Serial.println("eLOW"); 
+    {    
         if (finishProcess_)
         {
             digitalWrite(DRIVER_PUL_PIN, HIGH);
@@ -102,7 +98,7 @@ void Board::Controller::changeDuty(const unsigned int &period )
         break;
     }
     default:
-    {   Serial.println("default");
+    {   
         #ifdef DEBUG_PRINTS
             Serial.println("[WARN] default Sate called");
         #endif

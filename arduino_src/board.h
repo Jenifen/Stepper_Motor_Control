@@ -23,7 +23,7 @@
 #define MAX_ANALOG_READ 1023
 
 // max period for stepper 
-#define MIN_PERIOD_STEP 20
+#define MIN_PERIOD_STEP 10
 #define MAX_PERIOD_STEP 2000
 
 // for testing 
@@ -87,6 +87,7 @@ private:
     bool finishProcess_ = false;
 
     Board::Controller::PULState state_ = Board::Controller::PULState::eReady ;
+ 
 };
 
 

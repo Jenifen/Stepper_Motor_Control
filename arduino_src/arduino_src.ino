@@ -1,38 +1,38 @@
 #include "board.h"
 
-Board::Controller* control;
+Board::Controller control;
 
 
 void setup()
 {
     Serial.begin(DEBUG_BAUDRATE);
-    control->begin();
+    control.begin();
     //control->Stop();
     
     #ifdef START_DIRECTION_CLOCKWISE
       #ifndef START_DIRECTION_ANTICLOCKWISE
-      control->setDirection(control->eClockWise);
+      control.setDirection(control.eClockWise);
       #endif
     #endif
     
     #ifdef START_DIRECTION_ANTICLOCKWISE
       #ifndef START_DIRECTION_CLOCKWISE
-      control->setDirection(control->eAntiClockWise);
+      control.setDirection(control.eAntiClockWise);
       #endif
     #endif
     
     #ifdef TEST_STEP
-        control->TEST();
+        control.TEST();
     #endif 
 }
 void loop()
 {
 
     
-    //unsigned long period =  map(analogRead(POT_SPEED_PIN), MIN_ANALOG_READ, 
-      //  MAX_ANALOG_READ, MAX_PERIOD_STEP, MIN_PERIOD_STEP);
+    unsigned long period =  map(analogRead(POT_SPEED_PIN), MIN_ANALOG_READ, 
+        MAX_ANALOG_READ, MAX_PERIOD_STEP, MIN_PERIOD_STEP);
     
-    control->changeDuty(50); // no block 
+    control.changeDuty(period); // no block 
     
     /// FREQ : nbr rotation = 
     
