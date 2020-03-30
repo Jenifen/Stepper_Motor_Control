@@ -22,13 +22,6 @@ void Board::Controller::begin() const
 
 }
 
-static void Board::Controller::Stop() 
-{
-    digitalWrite(DRIVER_PUL_PIN, LOW);
-    digitalWrite(DRIVER_DIR_PIN, LOW);
-    while(digitalRead(READY_PIN));
-}
-
 
 void Board::Controller::setDirection(const Direction& dir) 
 {

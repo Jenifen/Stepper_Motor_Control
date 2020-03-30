@@ -41,12 +41,16 @@
 #define START_DIRECTION_CLOCKWISE
 //#define START_DIRECTION_ANTICLOCKWISE
 
+#define DISPLAY_LCD
 
 namespace Board 
 {
 
+static bool interrupt_value ;
+
 class Controller
 {
+
 public:
 
     enum Direction
@@ -62,6 +66,7 @@ public:
         eHIGH = 2,
         eError = 3
     };
+
 
     Controller(void);
     void begin() const ;
@@ -84,9 +89,15 @@ public:
      */
     void changePeriodCycle(const unsigned int& period) ; 
     
-    static void Stop();
+    static void Stop(){
+        interrupt_value = !interrupt_value;
+      }
     
     void TEST() const ;
+    
+    inline bool get_ready_state() {return digitalRead(READY_PIN);}
+    inline bool get_interrupt_state () {return interrupt_value; }
+
 
 private:
 
