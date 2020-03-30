@@ -13,7 +13,7 @@ void Board::Controller::begin() const
     pinMode(DRIVER_PUL_PIN, OUTPUT);
     pinMode(READY_PIN, INPUT_PULLUP);
     pinMode(STOP_PIN, INPUT_PULLUP);
-    attachInterrupt(digitalPinToInterrupt(STOP_PIN), this->Board::Controller::Stop, FALLING);
+    attachInterrupt(digitalPinToInterrupt(STOP_PIN), this->Stop, FALLING);
     
     delay(STARTUP_DELAY);
     #ifdef DEBUG_PRINTS
@@ -33,7 +33,7 @@ static void Board::Controller::Stop()
 void Board::Controller::setDirection(const Direction& dir) 
 {
     digitalWrite(DRIVER_DIR_PIN, dir);
-    delayMicroseconds(2);
+    delayMicroseconds(10);
     progress_direction_ = dir;
     #ifdef DEBUG_PRINTS
         Serial.println("\n Direction Changed \n");
@@ -42,7 +42,8 @@ void Board::Controller::setDirection(const Direction& dir)
 
 
 bool Board::Controller::getTimer()
-{
+{ 
+    static unsigned long previousMicros_ = 0;     // will store last time 
     unsigned long currentMicros = micros();
 
     if (abs(currentMicros - previousMicros_) >= pulseDelayPeriod_) 
@@ -67,7 +68,7 @@ bool Board::Controller::getTimer()
 void Board::Controller::changeDutyCycle(const unsigned int &period ) 
 {   
     pulseDelayPeriod_ = period; 
-    finishProcess_ = getTimer();
+    finish_period_process_ = getTimer();
     switch (state_)
     {
     case Board::Controller::PulseState::eReady :
@@ -78,7 +79,7 @@ void Board::Controller::changeDutyCycle(const unsigned int &period )
     } 
     case Board::Controller::PulseState::eHIGH :
     {    
-        if (finishProcess_)
+        if (finish_period_process_)
         {   
             digitalWrite(DRIVER_PUL_PIN, LOW);
             state_ = Board::Controller::PulseState::eLOW;
@@ -89,7 +90,7 @@ void Board::Controller::changeDutyCycle(const unsigned int &period )
     }
     case Board::Controller::PulseState::eLOW :
     {    
-        if (finishProcess_)
+        if (finish_period_process_)
         {
             digitalWrite(DRIVER_PUL_PIN, HIGH);
             state_ = Board::Controller::PulseState::eHIGH;
@@ -116,6 +117,7 @@ void Board::Controller::changeDutyCycle(const unsigned int &period )
 
 void Board::Controller::changePeriodCycle(const unsigned int& period)
 {
+    static unsigned long previousMillis_ = 0;     // will store last time 
     unsigned long currentMillis = millis();
     
     if (abs(currentMillis - previousMillis_) >= period) 

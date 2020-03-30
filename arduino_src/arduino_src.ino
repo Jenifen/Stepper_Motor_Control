@@ -25,18 +25,19 @@ void setup()
         control.TEST();
     #endif 
 
-    control.changePeriodCycle(2000);
 }
 void loop()
 {
+    /// FREQ : nbr rotation = m/s
 
-    
+    control.changePeriodCycle(2000);
+
     unsigned long period =  map(analogRead(POT_SPEED_PIN), MIN_ANALOG_READ, 
         MAX_ANALOG_READ, MAX_PERIOD_STEP, MIN_PERIOD_STEP);
     
+    
     control.changeDutyCycle(period); // no block 
     
-    /// FREQ : nbr rotation = 
     
     
     #ifdef DEBUG_PRINTS

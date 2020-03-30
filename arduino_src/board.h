@@ -67,7 +67,7 @@ public:
     
     /* 
      * @brief change duty 
-     * @param pwm : value [., . ]
+     * @param periodPulse : value [., . ]
      * 
      */ 
     
@@ -89,10 +89,7 @@ private:
     
     unsigned int pulseDelayPeriod_ = 500; //value pot 
 
-    unsigned long previousMicros_ = 0;     // will store last time 
-    unsigned long previousMillis_ = 0;     // will store last time 
-    
-    bool finishProcess_ = false;
+    bool finish_period_process_ = false;
 
     Board::Controller::PulseState state_ = Board::Controller::PulseState::eReady ;
     Board::Controller::Direction progress_direction_; 
