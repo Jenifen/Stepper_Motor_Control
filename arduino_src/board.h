@@ -23,8 +23,14 @@
 #define MAX_ANALOG_READ 1023
 
 // max period for stepper 
-#define MIN_PERIOD_STEP 10
-#define MAX_PERIOD_STEP 2000
+#define MIN_PERIOD_PULSE 10
+#define MAX_PERIOD_PULSE 2000
+
+// Cycle in m/s  
+#define MIN_PERIOD_CYCLE 1000
+#define MAX_PERIOD_CYCLE 20000
+
+
 
 // for testing 
 //#define TEST_STEP
@@ -87,7 +93,7 @@ private:
     bool getTimer();
 
     
-    unsigned int pulseDelayPeriod_ = 500; //value pot 
+    unsigned int pulseDelayPeriod_ = 50; //value pot 
 
     bool finish_period_process_ = false;
 

@@ -33,7 +33,7 @@ static void Board::Controller::Stop()
 void Board::Controller::setDirection(const Direction& dir) 
 {
     digitalWrite(DRIVER_DIR_PIN, dir);
-    delayMicroseconds(10);
+    delayMicroseconds(2);
     progress_direction_ = dir;
     #ifdef DEBUG_PRINTS
         Serial.println("\n Direction Changed \n");
@@ -65,7 +65,7 @@ bool Board::Controller::getTimer()
     }
 }
 
-void Board::Controller::changeDutyCycle(const unsigned int &period ) 
+void Board::Controller::changeDutyCycle(const unsigned int& period ) 
 {   
     pulseDelayPeriod_ = period; 
     finish_period_process_ = getTimer();
@@ -79,7 +79,6 @@ void Board::Controller::changeDutyCycle(const unsigned int &period )
     } 
     case Board::Controller::PulseState::eHIGH :
     {    
-      
         if (finish_period_process_)
         {   
             digitalWrite(DRIVER_PUL_PIN, LOW);
