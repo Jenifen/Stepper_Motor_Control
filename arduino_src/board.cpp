@@ -79,6 +79,7 @@ void Board::Controller::changeDutyCycle(const unsigned int &period )
     } 
     case Board::Controller::PulseState::eHIGH :
     {    
+      
         if (finish_period_process_)
         {   
             digitalWrite(DRIVER_PUL_PIN, LOW);
