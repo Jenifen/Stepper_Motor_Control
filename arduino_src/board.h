@@ -77,7 +77,7 @@ public:
      * @param period : period in [m/s]
      */
     void changePeriodCycle(const unsigned int& period) ; 
-
+    
     static void Stop();
     
     void TEST() const ;
