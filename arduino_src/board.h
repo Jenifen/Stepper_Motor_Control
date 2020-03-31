@@ -1,8 +1,6 @@
 #ifndef BOARD_H
 #define BOARD_H
 #include "Arduino.h"
-#include "LiquidCrystal_I2C.h"
-
 
 #define STARTUP_DELAY 2000
 
@@ -98,9 +96,8 @@ public:
 private:
   
     bool getTimer();
-
     
-    unsigned long pulseDelayPeriod_ = 50; //value pot 
+    unsigned long pulseDelayPeriod_ = 50; 
     unsigned long cyclePeriod_ = 500; 
     bool finish_period_process_ = false;
 
