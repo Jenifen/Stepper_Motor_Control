@@ -1,6 +1,6 @@
 # artificial_respirator
 
-Respirator prototype [2020]
+Respirator prototype V0 [2020]
 
 ## Table of contents
 * [General info](#general-info)
