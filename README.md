@@ -1,21 +1,25 @@
 # artificial_respirator
-Respirator project :
+
+Respirator prototype [2020]
+
 ## Table of contents
 * [General info](#general-info)
 * [Technologies](#technologies)
-* [Setup](#setup)
+
 ## General info
-This project is composed by :
-* config : Board.h
-* arduino_src : all packages of project
-* arduino.ino : mainprogram
+* PIN READY : 5
+* PIN STOP : 2
+* DIR : 6
+* PUL : 7
+* POT FOR PULSE PERIOD : A0
+* POT FOR CYCLE PERIOD : A1
+* A4, A5 : LCD 
 
 ## Technologies
 Project is created with:
 ### Software :
 * C++
 * arduino 
-* LiquidCrystal_I2C library 
 
 ### Hardware :
 * Arduino uno
@@ -25,8 +29,6 @@ Project is created with:
 * Two potentiometers 10Kohm
 * some buttons + LEDs
 
-## Setup
-To run this project
 
 ```
 
