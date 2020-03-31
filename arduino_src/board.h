@@ -46,7 +46,6 @@
 namespace Board 
 {
 
-static bool interrupt_value ;
 
 class Controller
 {
@@ -82,30 +81,27 @@ public:
      * 
      */ 
     
-    void changeDutyCycle(const unsigned int &period);
+    void changeDutyCycle(const unsigned long& period_pulse);
     /*
      * @brief this is for changing period cycle 
      * @param period : period in [m/s]
      */
-    void changePeriodCycle(const unsigned int& period) ; 
+    void changePeriodCycle(const unsigned long& period_cycle) ; 
     
-    static void Stop(){
-        interrupt_value = !interrupt_value;
-      }
     
     void TEST() const ;
     
-    inline bool get_ready_state() {return digitalRead(READY_PIN);}
-    inline bool get_interrupt_state () {return interrupt_value; }
-
+    inline unsigned long getPulsePeriod(){return pulseDelayPeriod_;}
+    inline unsigned long getCyclePeriod(){return cyclePeriod_;}
+    
 
 private:
-
+  
     bool getTimer();
 
     
-    unsigned int pulseDelayPeriod_ = 50; //value pot 
-
+    unsigned long pulseDelayPeriod_ = 50; //value pot 
+    unsigned long cyclePeriod_ = 500; 
     bool finish_period_process_ = false;
 
     Board::Controller::PulseState state_ = Board::Controller::PulseState::eReady ;

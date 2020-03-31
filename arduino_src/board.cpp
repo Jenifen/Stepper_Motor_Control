@@ -11,9 +11,7 @@ void Board::Controller::begin() const
 {
     pinMode(DRIVER_DIR_PIN, OUTPUT);
     pinMode(DRIVER_PUL_PIN, OUTPUT);
-    pinMode(READY_PIN, INPUT_PULLUP);
-    pinMode(STOP_PIN, INPUT_PULLUP);
-    attachInterrupt(digitalPinToInterrupt(STOP_PIN), this->Stop, FALLING);
+
     
     delay(STARTUP_DELAY);
     #ifdef DEBUG_PRINTS
@@ -21,7 +19,6 @@ void Board::Controller::begin() const
     #endif
 
 }
-
 
 void Board::Controller::setDirection(const Direction& dir) 
 {
@@ -58,9 +55,9 @@ bool Board::Controller::getTimer()
     }
 }
 
-void Board::Controller::changeDutyCycle(const unsigned int& period ) 
+void Board::Controller::changeDutyCycle(const unsigned long& period_cycle ) 
 {   
-    pulseDelayPeriod_ = period; 
+    pulseDelayPeriod_ = period_cycle; 
     finish_period_process_ = getTimer();
     switch (state_)
     {
@@ -108,12 +105,13 @@ void Board::Controller::changeDutyCycle(const unsigned int& period )
     
 }
 
-void Board::Controller::changePeriodCycle(const unsigned int& period)
+void Board::Controller::changePeriodCycle(const unsigned long& period_pulse)
 {
+    cyclePeriod_ = period_pulse ;
     static unsigned long previousMillis_ = 0;     // will store last time 
     unsigned long currentMillis = millis();
     
-    if (abs(currentMillis - previousMillis_) >= period) 
+    if (abs(currentMillis - previousMillis_) >= cyclePeriod_) 
     {
         previousMillis_ = currentMillis;
         if (progress_direction_ == Board::Controller::Direction::eClockWise)
