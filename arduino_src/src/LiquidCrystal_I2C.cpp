@@ -1,5 +1,5 @@
 
-#include "LiquidCrystal_I2C.h"
+#include "../include/LiquidCrystal_I2C.h"
 #include <inttypes.h>
 #include <Arduino.h>
 #include <Wire.h>

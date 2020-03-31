@@ -1,6 +1,6 @@
 
-#include "board.h"
-#include "LiquidCrystal_I2C.h"
+#include "include/board.h"
+#include "include/LiquidCrystal_I2C.h"
 
 Board::Controller control;
 
