@@ -1,6 +1,6 @@
-# artificial_respirator
+# Stepper_Motor_Control
 
-Respirator prototype V0 [2020]
+Stepper_Motor_Control 
 
 ## Table of contents
 * [General info](#general-info)
